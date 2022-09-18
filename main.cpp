@@ -76,10 +76,10 @@ int main(int argv, char *argc[]) {
                 if (argc[i][j] == 'c' && c == 0) {
                     c++;
                 }
-                if (argc[i][j] == 'w') {
+                if (argc[i][j] == 'w' && w == 0) {
                     w++;
                 }
-                if (argc[i][j] == 'm') {
+                if (argc[i][j] == 'm' && m == 0) {
                     m++;
                 }
             }
