@@ -35,7 +35,8 @@ void WordCount(int l, int b, int w, int c, std::basic_string<char> path) {
     }
     if (b != 0) {
         std::cout << chars << ' ';
-    } else {
+    }
+    if (l ==0 && w == 0 && c == 0 && b == 0) {
         std::cout << lines << ' ' << words << ' '
         << bytes << ' ';
     }
