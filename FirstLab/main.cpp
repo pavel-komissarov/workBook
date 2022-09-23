@@ -93,10 +93,10 @@ void WordCount(const int &isline, const int &isbyte,
         std::cout << lines << ' ';
     }
     if (isbyte != 0) {
-        std::cout << words << ' ';
+        std::cout << bytes << ' ';
     }
     if (isword != 0) {
-        std::cout << bytes << ' ';
+        std::cout << words << ' ';
     }
     if (ischar != 0) {
         std::cout << chars << ' ';
