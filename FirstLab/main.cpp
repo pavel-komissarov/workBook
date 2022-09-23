@@ -1,13 +1,54 @@
+//made by Paul
+//Lab work 1
+
+
 #include <iostream>
 #include <vector>
 #include <istream>
 #include <string>
 #include <fstream>
 
+
 std::vector<std::string> valid_options = {"l", "lines", "c", "bytes", "w", "words", "m", "chars"};
 
-//проверка на дублирование опций
-bool check_exists(std::vector<std::string> v, std::string s) {
+
+int fileSize(std::basic_ifstream<char> &file) {
+    int byteS;
+    file.clear();
+    byteS = file.tellg();
+    file.close();
+    return byteS;
+}
+
+
+int linesCounter(const char &nowChar, const int &lineS) {
+    int lines = lineS;
+    if (nowChar == '\n') {
+        lines++;
+    }
+    return lines;
+}
+
+
+int charsCounter(const char &nowChar, const int &charS) {
+    int chars = charS;
+    if (isalpha(nowChar)) {
+        chars++;
+    }
+    return chars;
+}
+
+
+int wordsCounter(const char &pastChar, const char &nowChar, const int &wordS) {
+    int words = wordS;
+    if (!isspace(nowChar) && isspace(pastChar)) {
+        words++;
+    }
+    return words;
+}
+
+//duplicate check
+bool check_exists(const std::vector<std::string> &v, const std::string &s) {
     for (int i = 0; i < v.size(); i++) {
         if (v[i] == s) {
             return true;
@@ -16,62 +57,51 @@ bool check_exists(std::vector<std::string> v, std::string s) {
     return false;
 }
 
-//проверка на валидность введенной опции
-bool check_valid(std::string s) {
+//validation of the entered option
+bool check_valid(const std::string &s) {
     for (int i = 0; i < valid_options.size(); i++) {
         if (valid_options[i] == s) return true;
     }
     return false;
 }
 
-//функция для работы с текстовым файлом
-void WordCount(int l, int c, int w, int m, std::basic_string<char> path) {
+//function to work with text file
+void WordCount(const int &isline, const int &isbyte,
+               const int &isword, const int &ischar,
+               const std::basic_string<char> &path) {
 
-    int chars = 0, words = 0;
-    int lines = 1, bytes = 0;
-
+    int chars = 0;
+    int words = 0;
+    int lines = 1;
+    int bytes;
+    char pastChar = ' ';
+    char nowChar;
 
     std::ifstream filew(path);
-    std::string word;
-    while (filew >> word) {
-        words++;
+
+    while (filew.get(nowChar)) {
+        words = wordsCounter(pastChar, nowChar, words);
+        chars = charsCounter(nowChar, chars);
+        lines = linesCounter(nowChar, lines);
+        pastChar = nowChar;
     }
+    bytes = fileSize(filew);
     filew.close();
 
-    std::ifstream file(path);
-    while (file.good()) {
-        int c = file.get();
-        if (c != -1) //если не eof
-        {
-            bytes++;
-            //std::cout << "c = \"" << c << "\"\n";
-            //Функция isalpha проверяет аргумент,
-            //передаваемый через параметр сharacter, является ли он строчной
-            //или прописной буквой алфавита
-            if (isalpha(c)) {
-                chars++;
-            }
-            if (c == '\n') {
-                lines++;
-            }
-        }
 
-    }
-    file.close();
-
-    if (l != 0) {
+    if (isline != 0) {
         std::cout << lines << ' ';
     }
-    if (w != 0) {
+    if (isbyte != 0) {
         std::cout << words << ' ';
     }
-    if (c != 0) {
+    if (isword != 0) {
         std::cout << bytes << ' ';
     }
-    if (m != 0) {
+    if (ischar != 0) {
         std::cout << chars << ' ';
     }
-    if (l == 0 && w == 0 && c == 0 && m == 0) {
+    if (isline == 0 && isbyte == 0 && isword == 0 && ischar == 0) {
         std::cout << lines << ' ' << words << ' '
                   << bytes << ' ';
     }
@@ -79,60 +109,61 @@ void WordCount(int l, int c, int w, int m, std::basic_string<char> path) {
 }
 
 int main(int argv, char *argc[]) {
-    if (argv == 1) { // если в аргументах только имя программы
+    if (argv == 1) { //if only the program name is in the arguments
         std::cout << "No arguments!\n";
     } else {
-        int l = 0, m = 0, w = 0, c = 0;
+        int isline = 0;
+        int ischar = 0;
+        int isword = 0;
+        int isbyte = 0;
         std::vector<std::basic_string<char>> paths;
         std::vector<std::string> options;
-        std::string stroka, virez1, virez2, srez;
+        std::string lineArg, cutout1, cutout2, slice;
         int len;
-        //парсинг полученных данных
-        //начинаем цикл с 1, т.к. в 0 лежит только имя программы
+        //parsing the obtained data
+        //Start cycle with 1, because in 0 there is only the name of the program
         for (int i = 1; i < argv; i++) {
-            stroka = argc[i];
-            virez1 = stroka.substr(0, 1); //для анализа "-"
-            virez2 = stroka.substr(0, 2); //для анализа "--"
-            len = stroka.size();
-            if (virez2 == "--") {
-                //здесь только одна опция
-                //отрежем первые два символа "--"
-                srez = stroka.substr(2, len);
-                if (check_valid(srez) && srez.length() > 1) {
-                    if (!check_exists(options, srez)) options.push_back(srez);
+            lineArg = argc[i];
+            cutout1 = lineArg.substr(0, 1); //for analysis "-"
+            cutout2 = lineArg.substr(0, 2); //for analysis "--"
+            len = lineArg.size();
+            if (cutout2 == "--") {
+                //there is only one option
+                //cut the first two characters "-"
+                slice = lineArg.substr(2, len);
+                if (check_valid(slice) && slice.length() > 1) {
+                    if (!check_exists(options, slice)) options.push_back(slice);
                 } else {
-                    std::cout << "No valid option = \"" << stroka << "\"\n";
+                    std::cout << "No valid option = \"" << lineArg << "\"\n";
                     return 1;
                 }
-            } else if (virez1 == "-") {
-                //может быть несколько опций
-                //начинаем цикл с 1, т.к. в 0 лежит символ "-"
+            } else if (cutout1 == "-") {
+                //can be several options
+                //We start the cycle with 1, because 0 is the symbol "-"
                 for (int i = 1; i < len; i++) {
-                    //смотрим по одному символу
-                    srez = stroka.substr(i, 1);
-                    if (check_valid(srez)) {
-                        if (!check_exists(options, srez)) options.push_back(srez);
+                    //Looking at one symbol
+                    slice = lineArg.substr(i, 1);
+                    if (check_valid(slice)) {
+                        if (!check_exists(options, slice)) options.push_back(slice);
                     } else {
-                        std::cout << "No valid option = \"" << stroka << "\"\n";
+                        std::cout << "No valid option = \"" << lineArg << "\"\n";
                         return 1;
                     }
                 }
-            } else //если нет "-" или "--", то считаем, что в параметре файл
+            } else //if there is no "-" or "-", we assume that in the parameter the file
             {
-                paths.push_back(stroka);
-            };
+                paths.push_back(lineArg);
+            }
         }
         for (int i = 0; i < options.size(); i++) {
-            if (options[i] == "l" || options[i] == "lines") l = 1;
-            if (options[i] == "c" || options[i] == "bytes") c = 1;
-            if (options[i] == "w" || options[i] == "words") w = 1;
-            if (options[i] == "m" || options[i] == "chars") m = 1;
+            if (options[i] == "l" || options[i] == "lines") isline = 1;
+            if (options[i] == "c" || options[i] == "bytes") isbyte = 1;
+            if (options[i] == "w" || options[i] == "words") isword = 1;
+            if (options[i] == "m" || options[i] == "chars") ischar = 1;
         }
-
         for (int i = 0; i < std::size(paths); i++) {
-            WordCount(l, c, w, m, paths[i]);    //вызов функции
+            WordCount(isline, isbyte, isword, ischar, paths[i]);    //call a function
         }
-
         return 0;
     }
     return 0;
