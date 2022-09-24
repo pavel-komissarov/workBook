@@ -13,13 +13,8 @@ std::vector<std::string> valid_options = {"l", "lines", "c", "bytes", "w", "word
 
 
 int fileSize(std::basic_ifstream<char> &file) {
-    int byteS;
-    file.clear();
-    byteS = file.tellg();
-    file.close();
-    return byteS;
+    return file.tellg();;
 }
-
 
 int linesCounter(const char &nowChar, const int &lineS) {
     int lines = lineS;
@@ -68,26 +63,23 @@ bool check_valid(const std::string &s) {
 //function to work with text file
 void WordCount(const int &isline, const int &isbyte,
                const int &isword, const int &ischar,
+               std::ifstream &file,
                const std::basic_string<char> &path) {
 
     int chars = 0;
     int words = 0;
     int lines = 1;
-    int bytes;
+    int bytes = 0;
     char pastChar = ' ';
     char nowChar;
 
-    std::ifstream filew(path);
-
-    while (filew.get(nowChar)) {
+    while (file.get(nowChar)) {
         words = wordsCounter(pastChar, nowChar, words);
         chars = charsCounter(nowChar, chars);
         lines = linesCounter(nowChar, lines);
+        bytes = fileSize(file);
         pastChar = nowChar;
     }
-    bytes = fileSize(filew);
-    filew.close();
-
 
     if (isline != 0) {
         std::cout << lines << ' ';
@@ -162,7 +154,14 @@ int main(int argv, char *argc[]) {
             if (options[i] == "m" || options[i] == "chars") ischar = 1;
         }
         for (int i = 0; i < std::size(paths); i++) {
-            WordCount(isline, isbyte, isword, ischar, paths[i]);    //call a function
+            std::ifstream filew;
+            filew.open(paths[i]);
+            if (filew.fail()) {
+                std::cout << "File \"" << paths[i] << "\" doesn't exists !\n";
+                return 1;
+            }
+            WordCount(isline, isbyte, isword, ischar, filew, paths[i]);    //call a function
+            filew.close();
         }
         return 0;
     }
