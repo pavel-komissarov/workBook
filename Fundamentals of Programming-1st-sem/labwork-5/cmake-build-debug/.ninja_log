@@ -1,0 +1,24 @@
+# ninja log v5
+21	888	6918604606119160	bin/CMakeFiles/labwork5.dir/main.cpp.obj	ef9aebf841e9e79
+10738	14585	6926964184080851	tests/argparser_tests.exe	a4e195be9f97e158
+7	958	6918604606815328	lib/CMakeFiles/argparser.dir/ArgParser.cpp.obj	5814e2c7281c8ae7
+959	1154	6918604608814064	lib/libargparser.a	f6682ff6312bea76
+55	8496	6926964123121338	_deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.obj	452f131352b77655
+1154	1579	6918604612895100	bin/labwork5.exe	22cffc98729903e0
+8	2570	6926964063930301	tests/CMakeFiles/argparser_tests.dir/argparser_test.cpp.obj	c4ba0560a26968cb
+75	2118	6926964059418952	_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.obj	2a4ea9f55752be90
+33	2584	6926964064096071	_deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.obj	f9bd8a61a3d997f
+20	4056	6926964078784745	_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.obj	edfce2dbe6ff0e56
+8497	10596	6926964144239558	lib/libgtest.a	ca09299867468b54
+10614	10738	6926964145677737	lib/libgtest_main.a	aeaf42e01b92f53f
+10596	10997	6926964148257007	lib/libgmock.a	a8c4b1c1a78c24f6
+10997	11109	6926964149382738	lib/libgmock_main.a	40400c059f6b27a5
+10738	14585	6926964184080851	tests/argparser_tests[1]_tests.cmake	a4e195be9f97e158
+10738	14585	6926964184080851	C:/Users/pavel/Desktop/labwork-5/cmake-build-debug/tests/argparser_tests[1]_tests.cmake	a4e195be9f97e158
+27	1940	6927389355472118	bin/labwork5.exe	36d605a0c5036e2b
+10	3196	6927510737811314	lib/CMakeFiles/argparser.dir/ArgParser.cpp.obj	5814e2c7281c8ae7
+3197	3738	6927510743365574	lib/libargparser.a	f6682ff6312bea76
+3738	5191	6927510757811951	bin/labwork5.exe	36d605a0c5036e2b
+3765	9676	6927510802751552	tests/argparser_tests.exe	a4e195be9f97e158
+3765	9676	6927510802751552	tests/argparser_tests[1]_tests.cmake	a4e195be9f97e158
+3765	9676	6927510802751552	C:/Users/pavel/Desktop/labwork-5/cmake-build-debug/tests/argparser_tests[1]_tests.cmake	a4e195be9f97e158

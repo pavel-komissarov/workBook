@@ -1,0 +1,16 @@
+ArgParserTestSuite.EmptyTest 12 0.00159646
+ArgParserTestSuite.StringTest 12 0.00159732
+ArgParserTestSuite.ShortNameTest 12 0.00149777
+ArgParserTestSuite.DefaultTest 12 0.00155557
+ArgParserTestSuite.NoDefaultTest 12 0.00162857
+ArgParserTestSuite.StoreValueTest 12 0.0920022
+ArgParserTestSuite.MultiStringTest 12 0.0141346
+ArgParserTestSuite.IntTest 12 0.00380598
+ArgParserTestSuite.MultiValueTest 12 0.00930927
+ArgParserTestSuite.MinCountMultiValueTest 12 0.00814815
+ArgParserTestSuite.FlagTest 12 0.00392209
+ArgParserTestSuite.FlagsTest 12 0.00442119
+ArgParserTestSuite.PositionalArgTest 12 0.00514872
+ArgParserTestSuite.HelpTest 12 0.0179271
+ArgParserTestSuite.HelpStringTest 12 0.00946892
+---
